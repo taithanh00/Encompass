@@ -38,7 +38,7 @@ if (version_compare('4.7.0', get_bloginfo('version'), '>=')) {
  * Ensure dependencies are loaded
  */
 if (!class_exists('Roots\\Sage\\Container')) {
-    if (!file_exists($composer = __DIR__.'/../vendor/autoload.php')) {
+    if (!file_exists($composer = __DIR__ . '/../vendor/autoload.php')) {
         $sage_error(
             __('You must run <code>composer install</code> from the Sage directory.', 'sage'),
             __('Autoloader not found.', 'sage')
@@ -85,56 +85,41 @@ array_map(
 Container::getInstance()
     ->bindIf('config', function () {
         return new Config([
-            'assets' => require dirname(__DIR__).'/config/assets.php',
-            'theme' => require dirname(__DIR__).'/config/theme.php',
-            'view' => require dirname(__DIR__).'/config/view.php',
+            'assets' => require dirname(__DIR__) . '/config/assets.php',
+            'theme' => require dirname(__DIR__) . '/config/theme.php',
+            'view' => require dirname(__DIR__) . '/config/view.php',
         ]);
     }, true);
-    // function sun_dich_vu_init() {
-    //     $labels = array(
-    //         'name'                  => _x( 'Dịch vụ', 'Post type general name', 'textdomain' ),
-    //         'singular_name'         => _x( 'Dịch vụ', 'Post type singular name', 'textdomain' ),
-    //         'menu_name'             => _x( 'Dịch vụ', 'Admin Menu text', 'textdomain' ),
-    //         'name_admin_bar'        => _x( 'Dịch vụ', 'Add New on Toolbar', 'textdomain' ),
-    //         'add_new'               => ( 'Add New', 'textdomain' ),
-    //         'add_new_item'          => ( 'Add New Dịch vụ', 'textdomain' ),
-    //         'new_item'              => ( 'New Dịch vụ', 'textdomain' ),
-    //         'edit_item'             => ( 'Edit Dịch vụ', 'textdomain' ),
-    //         'view_item'             => ( 'View Dịch vụ', 'textdomain' ),
-    //         'all_items'             => ( 'All Dịch vụ', 'textdomain' ),
-    //         'search_items'          => ( 'Search Dịch vụ', 'textdomain' ),
-    //         'parent_item_colon'     => ( 'Parent Dịch vụ:', 'textdomain' ),
-    //         'not_found'             => ( 'No Dịch vụ found.', 'textdomain' ),
-    //         'not_found_in_trash'    => ( 'No Dịch vụ found in Trash.', 'textdomain' ),
-    //         'featured_image'        => _x( 'Book Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-    //         'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-    //         'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-    //         'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-    //         'archives'              => _x( 'Dịch vụ archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-    //         'insert_into_item'      => _x( 'Insert into Dịch vụ', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-    //         'uploaded_to_this_item' => _x( 'Uploaded to this Dịch vụ', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-    //         'filter_items_list'     => _x( 'Filter Dịch vụ list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-    //         'items_list_navigation' => _x( 'Dịch vụ list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-    //         'items_list'            => _x( 'Dịch vụ list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
-    //     );
-    
-     
-    //     $args = array(
-    //         'labels'             => $labels,
-    //         'public'             => true,
-    //         'publicly_queryable' => true,
-    //         'show_ui'            => true,
-    //         'show_in_menu'       => true,
-    //         'query_var'          => true,
-    //         'rewrite'            => array( 'slug' => 'service' ),
-    //         'capability_type'    => 'post',
-    //         'has_archive'        => true,
-    //         'hierarchical'       => false,
-    //         'menu_position'      => null,
-    //         'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-    //     );
-     
-    //     register_post_type( 'dich_vu', $args );
-    // }
-     
-    // add_action( 'init', 'sun_dich_vu_init' );
+
+
+function testimonial_custom_post_type()
+{
+    register_post_type(
+        'Testimonial',
+        array(
+            'labels' => array(
+                'name'  => __('Testimonial', 'textdomain'),
+                'singular_name' => __('Testimonial', 'textdomain'),
+            ),
+            'public' => true,
+            'has_archive' => true,
+        )
+    );
+}
+add_action('init', 'testimonial_custom_post_type');
+
+function logo_custom_post_type()
+{
+    register_post_type(
+        'Logo',
+        array(
+            'labels' => array(
+                'name'  => __('Logos', 'textdomain'),
+                'singular_name' => __('Logo', 'textdomain'),
+            ),
+            'public' => true,
+            'has_archive' => true,
+        )
+    );
+}
+add_action('init', 'logo_custom_post_type');
